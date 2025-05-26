@@ -1,0 +1,24 @@
+// Requer: npm install axios dotenv
+
+require('dotenv').config();
+const axios = require('axios');
+
+const shopify = axios.create({
+  baseURL: 'https://ellassemijoias.myshopify.com/admin/api/2024-01',
+  headers: {
+    'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+    'Content-Type': 'application/json',
+  },
+});
+
+// Exemplo: buscar produtos da loja
+async function listarProdutos() {
+  try {
+    const resposta = await shopify.get('/products.json');
+    console.log(resposta.data.products); // Mostra os produtos no console
+  } catch (erro) {
+    console.error('Erro ao buscar produtos:', erro.response?.data || erro.message);
+  }
+}
+
+listarProdutos();
